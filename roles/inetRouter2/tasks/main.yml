@@ -1,0 +1,44 @@
+---
+- name: Set sysctl params
+  sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_file: /etc/sysctl.conf
+    ignoreerrors: true
+    reload: true
+  with_dict: "{{ sysctl_params }}"
+
+
+- name: start firewalld
+  systemd:
+      name: firewalld
+      state: started
+
+
+- name: Routes in file 
+  lineinfile:
+    path: /etc/sysconfig/network-scripts/route-eth1
+    create: true
+    regexp: ^{{ item.network }}
+    line: '{{ item.network }} via {{ item.via }} dev {{ item.net_interface }}'
+  loop:  
+    - "{{ routes_params.inetrouter.eth1 }}"
+  notify: restartnet   
+
+- name: Copy file 
+  copy:
+    src: port.rule
+    dest: /etc/sysconfig/iptables
+    owner: root
+    group: root
+    mode: '0600'
+  notify: restartnet  
+
+- name: Reboot server
+  reboot: 
+    msg: "Reboot initiated by Ansible"
+
+
+- name: iptables-restore  
+  shell: 'iptables-restore < /etc/sysconfig/iptables'

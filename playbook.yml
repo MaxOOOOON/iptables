@@ -1,2 +1,30 @@
 ---
+- name: "Сonfiguring the inetrouter"
+  hosts: inetRouter
+  gather_facts: true
+  roles:
+    - inetRouter
+  become: true
+
+
+- name: "Сonfiguring centralServer"
+  hosts: centralServer
+  gather_facts: true
+  roles:
+    - centralServer
+  become: true
+
   
+- name: "Сonfiguring centralRouter"
+  hosts: centralRouter
+  gather_facts: true
+  roles:
+    - centralRouter
+  become: true
+
+- name: "Сonfiguring inetRouter2"
+  hosts: inetRouter2
+  gather_facts: true
+  roles:
+    - inetRouter2
+  become: true
