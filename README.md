@@ -34,8 +34,8 @@
 
 Проверка    
 
-![]()  
+![](https://github.com/MaxOOOOON/iptables/blob/main/pictures/Screenshot_20211103_004952.png)  
 
 Проверка проброса порта     
 
-![]()  
+![](https://github.com/MaxOOOOON/iptables/blob/main/pictures/Screenshot_20211103_004326.png)  
